@@ -40,21 +40,17 @@ def ex_strategy_two(numgames, gameNo, inQ, numActions, s):
   	Qvalue = inQ[s][a]
     probabilities.append(Qvalue/tau)
   choice = random.randrange(0, sum(probabilities))
-  indexSoFar = 0
+  probSoFar = 0.0
   for i in range(probabilities):
-    
-
-
-  # only use top
-  # 
-
-
+    if probSoFar <= choice <= probSoFar + probabilities[i]:
+      return i
+    else:
+      probSoFar += probabilities[i]
 
 # The Q-learning algorithm:
 def Q_learning(gamma, numRounds, alpha):
   states = darts.get_states()
   actions = darts.get_actions()
-
 
   Q = {}
   for s in states:
