@@ -7,8 +7,8 @@ import time
 import random
 import throw
 import mdp
-# import modelbased
-# import modelfree
+import modelbased
+import modelfree
 
 GAMMA = .5
 EPOCH_SIZE = 10

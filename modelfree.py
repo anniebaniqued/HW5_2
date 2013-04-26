@@ -37,7 +37,7 @@ def ex_strategy_two(numgames, gameNo, inQ, numActions, s):
   tau = float(numgames - gameNo)
   probabilities = []
   for a in range(numActions):
-  	Qvalue = inQ[s][a]
+    Qvalue = inQ[s][a]
     probabilities.append(Qvalue/tau)
   choice = random.randrange(0, sum(probabilities))
   probSoFar = 0.0
@@ -51,41 +51,29 @@ def ex_strategy_two(numgames, gameNo, inQ, numActions, s):
 def Q_learning(gamma, numRounds, alpha):
   states = darts.get_states()
   actions = darts.get_actions()
-
+  currentRound = 0
   Q = {}
   for s in states:
   	Q[s] = [0] * len(actions)
 
   for i in range(numRounds):
+    s = throw.START_SCORE
+    numiterations = 0
+    while s > 0:
+      randAction = random.randint(0, len(actions))
+      maxAction = Q[score].index(max(Q[s]))
 
-  	s = throw.START_SCORE
+      #a = ex_strategy_one(Q, randAction, maxAction)
+      a = ex_strategy_two(numRounds, currentRound, Q, len(actions), s)
+      action = actions[a]
 
-  	numiterations = 0
-
-  	while s > 0:
-  	  randAction = random.randint(0, len(actions))
-  	  maxAction = Q[score].index(max(Q[s]))
-
-  	  #a = ex_strategy_one(Q, randAction, maxAction)
-  	  a = ex_strategy_two(Q, len(actions), s)
-  	  action = actions[a]
-
-  	  s_prime = s - throw.location_to_score(action)
-  	  if s_prime < 0:
-  	  	s_prime = s
-
-  	  maxQ = 0.0
-  	  for a_prime in range(len(actions)):
-  	  	if Q[s_prime][a_prime] > maxQ:
-  	  		maxQ = Q[s_prime][a_prime]
-
-	  Q[s][a] = Q[s][a] + alpha * (darts.R(s, actions[a]) + (gamma * maxQ) - Q[s][a])
-
-	  s = s_prime
-
-
-
-
-
-
-
+      s_prime = s - throw.location_to_score(action)
+      if s_prime < 0:
+        s_prime = s
+        maxQ = 0.0
+      for a_prime in range(len(actions)):
+        if Q[s_prime][a_prime] > maxQ:
+          maxQ = Q[s_prime][a_prime]
+      Q[s][a] = Q[s][a] + alpha * (darts.R(s, actions[a]) + (gamma * maxQ) - Q[s][a])
+      s = s_prime
+      currentRound += 1
