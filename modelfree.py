@@ -28,15 +28,22 @@ def ex_strategy_one(randAction, maxAction):
   randomNum = throw.ranf()
   if randomNum < 0.2:
     return randAction
-  else: return maxAction
+  else: 
+    return maxAction
 
 # Exploration/exploitation strategy two.
 # BOLTZMANN
-def ex_strategy_two(numgames, gameNo, inQ, numActions):
-  tau = numgames - gameNo
+def ex_strategy_two(numgames, gameNo, inQ, numActions, s):
+  tau = float(numgames - gameNo)
   probabilities = []
-  for actionI in range(numActions):
-  	Qvalue = inQ[]
+  for a in range(numActions):
+  	Qvalue = inQ[s][a]
+    probabilities.append(Qvalue/tau)
+  choice = random.randrange(0, sum(probabilities))
+  indexSoFar = 0
+  for i in range(probabilities):
+    
+
 
   # only use top
   # 
@@ -64,7 +71,7 @@ def Q_learning(gamma, numRounds, alpha):
   	  maxAction = Q[score].index(max(Q[s]))
 
   	  #a = ex_strategy_one(Q, randAction, maxAction)
-  	  a = ex_strategy_two(Q, randAction, maxAction)
+  	  a = ex_strategy_two(Q, len(actions), s)
   	  action = actions[a]
 
   	  s_prime = s - throw.location_to_score(action)
