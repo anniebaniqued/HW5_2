@@ -41,16 +41,19 @@ def get_actions():
   return actions
 
 # <CODE HERE>: Define the reward function
-# Penalize -1 for every throw, in order to try to minimize the total number of throws
 def R(s,a):
   # takes a state s and action a
   # returns the reward for completing action a in state s
   # utility function
-  points = throw.location_to_score(a)
-  if points <= s:
-    return points
-  else:
-    return 0
+  # points = throw.location_to_score(a)
+  if s==0:
+    return 100000
+  return 1.0/s
+
+  #if points <= s:
+  #  return points
+  #else:
+  #  return 0
 
 """
   if s = 0:
